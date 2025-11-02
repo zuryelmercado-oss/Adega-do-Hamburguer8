@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adega do Hambúrguer</title>
+  <meta name="description" content="Onde o artesanal é levado a sério">
+  
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --primary: #c41e3a;     /* vermelho vinho */
+      --accent: #d4af37;      /* dourado rústico */
+      --wood: #8B4513;        /* madeira escura */
+      --dark: #0f0f0f;        /* fundo escuro */
+      --text: #f5f5f5;        /* texto claro */
+      --text-muted: #cccccc;  /* texto secundário */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      color: var(--text);
+      background: var(--dark);
+      background-image: 
+        radial-gradient(circle at 10% 90%, rgba(139,69,19,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(139,69,19,0.1) 0%, transparent 50%);
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(15,15,15,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 3px solid var(--wood);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .nav-container {
+      display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    .nav-menu { display: flex; list-style: none; gap: 2rem; }
+    .nav-menu a {
+      color: var(--text); text-decoration: none; font-weight: 600;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-menu a::after {
+      content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px;
+      background: var(--accent); transition: width 0.3s;
+    }
+    .nav-menu a:hover { color: var(--accent); }
+    .nav-menu a:hover::after { width: 100%; }
+
+    .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
+    .hamburger span { width: 30px; height: 3px; background: var(--accent); border-radius: 2px; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding-top: 100px; position: relative;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+                  url('https://images.unsplash.com/photo-1607013251379-e5eecffdee28?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+      background-attachment: fixed;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--accent);
+      margin-bottom: 1rem; letter-spacing: 1px;
+    }
+    .hero p {
+      font-size: 1.3rem; color: var(--text-muted); max-width: 700px; margin: 1rem auto;
+    }
+    .btn {
+      display: inline-block; padding: 16px 40px; border-radius: 8px; font-weight: 700;
+      text-decoration: none; transition: all 0.4s; margin: 12px; font-size: 1.1rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+    .btn-primary {
+      background: var(--primary); color: white; border: 2px solid var(--primary);
+    }
+    .btn-primary:hover {
+      background: #a0172e; transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(196,30,58,0.5);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--accent); border: 2px solid var(--accent);
+    }
+    .btn-secondary:hover {
+      background: var(--accent); color: var(--dark); transform: translateY(-4px);
+    }
+
+    /* Seções */
+an */
+    .section { padding: 130px 0; }
+    h2 {
+      font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--accent);
+      text-align: center; margin-bottom: 2rem; position: relative;
+    }
+    h2::after {
+      content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 5px; background: var(--wood); border-radius: 3px;
+    }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;
+    }
+    .card {
+      background: rgba(139,69,19,0.1); border: 2px solid var(--wood); border-radius: 12px;
+      padding: 1.8rem; text-align: center; transition: all 0.4s;
+      backdrop-filter: blur(6px);
+    }
+    .card:hover {
+      transform: translateY(-8px); box-shadow: 0 12px 25px rgba(139,69,19,0.25);
+    }
+    .card img {
+      width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    }
+    .card h3 {
+      color: var(--accent); font-size: 1.4rem; margin-bottom: 0.6rem;
+    }
+
+    /* WhatsApp Flutuante */
+    .whatsapp-btn {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white;
+      width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 2.2rem; box-shadow: 0 10px 30px rgba(37,211,102,0.6);
+      z-index: 999; animation: pulse 2s infinite; border: 4px solid white;
+      text-decoration: none;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); }
+      70% { box-shadow: 0 0 0 22px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-menu { position: fixed; top: 70px; left: -100%; width: 100%; background: #0a0a0a;
+        flex-direction: column; padding: 2rem 0; transition: 0.4s; border-bottom: 3px solid var(--wood); }
+      .nav-menu.active { left: 0; }
+      .hero h1 { font-size: 2.3rem; }
+      .btn { display: block; margin: 15px auto; max-width: 280px; }
+      h2 { font-size: 2.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo">Adega do Hambúrguer</div>
+      <ul class="nav-menu">
+        <li><a href="#home">Início</a></li>
+        <li><a href="#historia">Conheça nossa história</a></li>
+        <li><a href="#contato">Fale conosco</a></li>
+      </ul>
+      <div class="hamburger" onclick="document.querySelector('.nav-menu').classList.toggle('active')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>Adega do Hambúrguer — onde o artesanal é levado a sério</h1>
+    <p>A Adega do Hambúrguer nasceu em 2025 com uma ideia simples, mas poderosa: trazer de volta o verdadeiro sabor do hambúrguer artesanal, feito com ingredientes selecionados, respeito pelo processo e paixão em cada detalhe.</p>
+    
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hambúrguer artesanal sendo preparado" style="width:100%; max-width:600px; border-radius:12px; margin:2rem 0; box-shadow:0 15px 30px rgba(0,0,0,0.6);">
+
+    <p>Mais do que vender um lanche, a gente acredita em entregar uma experiência — aquela mordida que te faz perceber o cuidado, o sabor e o amor por trás de cada receita.</p>
+    
+    <a href="#historia" class="btn btn-primary">Conheça nossa história</a>
+    <a href="https://wa.me/554195433974" class="btn btn-secondary">Fale conosco</a>
+  </section>
+
+  <!-- História -->
+  <section class="section" id="historia">
+    <div class="container">
+      <h2>Começamos pequenos, mas com grandes sonhos</h2>
+      <p style="text-align:center; max-width:800px; margin:0 auto 2rem; font-size:1.1rem;">
+        Cada passo é construído com dedicação, aprendizado e propósito, porque acreditamos que as melhores histórias são escritas com trabalho e verdade.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1607013251379-e5eecffdee28?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ingredientes frescos">
+          <h3>Ingredientes Frescos</h3>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1559058777-71b5c1d6c4a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Carne Angus">
+          <h3>100% Angus</h3>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1607012861129-0d906c5d9c2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pão artesanal">
+          <h3>Pão Artesanal</h3>
+        </div>
+      </div>
+
+      <p style="text-align:center; margin-top:3rem; font-size:1.1rem; max-width:800px; margin-left:auto; margin-right:auto;">
+        Nosso objetivo é crescer mantendo nossa essência: fazer o melhor hambúrguer possível, com qualidade e honestidade, e mostrar que quem faz com o coração sempre chega lá.<br><br>
+        A Adega do Hambúrguer é mais do que uma marca — é o início de uma jornada.<br>
+        E você faz parte dela.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section class="section" id="contato" style="background: linear-gradient(135deg, #1a0d05, #0f0f0f);">
+    <div class="container" style="text-align:center;">
+      <h2>Pronto para viver essa experiência?</h2>
+      <p style="font-size:1.3rem; margin:2rem 0;">
+        Fale com a gente pelo WhatsApp e descubra o que é um hambúrguer feito com alma.
+      </p>
+      <a href="https://wa.me/554195433974" class="btn btn-primary" style="font-size:1.3rem; padding:18px 50px;">
+        <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- WhatsApp Flutuante -->
+  <a href="https://wa.me/554195433974" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    // Menu mobile
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.nav-menu').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
